@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import axios from 'axios';
+import { products as staticProducts } from '../data/products';
 import { Product } from '../types';
 import ProductCard from '../components/ProductCard';
 import { motion, AnimatePresence } from 'motion/react';
@@ -23,12 +23,11 @@ export default function Home() {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
 
-  useEffect(() => {
-    axios.get('/api/products')
-      .then(res => setProducts(res.data))
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
-  }, []);
+ useEffect(() => {
+  // Use static products instead of API call
+  setProducts(staticProducts);
+  setLoading(false);
+}, []);
 
   const filteredAndSortedProducts = useMemo(() => {
     let result = products.filter(product => {
