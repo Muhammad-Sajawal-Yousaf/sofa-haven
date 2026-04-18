@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { products } from '../../src/data/products';
+import { products } from '../../src/data/products.js';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const { id } = req.query;

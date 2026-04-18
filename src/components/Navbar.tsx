@@ -20,8 +20,7 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Home</Link>
-          <Link to="/#collections" className="text-sm font-medium hover:text-primary transition-colors">Collections</Link>
+          {/* Navigation links removed for cleaner header */}
         </div>
 
         <div className="flex items-center gap-4">
@@ -49,8 +48,6 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right">
               <div className="flex flex-col gap-4 mt-8">
-                <Link to="/" className="text-lg font-medium">Home</Link>
-                <Link to="/#collections" className="text-lg font-medium">Collections</Link>
                 <Link to="/wishlist" className="text-lg font-medium">Wishlist ({wishlistCount})</Link>
                 <Link to="/cart" className="text-lg font-medium">Cart ({cartCount})</Link>
               </div>
