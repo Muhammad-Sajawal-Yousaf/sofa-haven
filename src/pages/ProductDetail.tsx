@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { products as staticProducts } from '../data/products';
 import { Product, Variant, Extra, CartItem } from '../types';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -67,27 +67,19 @@ export default function ProductDetail() {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`/api/products/${id}`)
-      .then(res => {
-        const p = res.data;
-        setProduct(p);
-        setSelectedVariant(p.variants[0]);
-        setMainImage(p.variants[0]?.image || p.images[0]);
-      })
-      .catch(err => {
-        console.error(err);
-        toast.error("Product not found");
-        navigate('/');
-      })
-      .finally(() => setLoading(false));
-
-    // Fetch related products
-    axios.get('/api/products')
-      .then(res => {
-        const allProducts: Product[] = res.data;
-        setRelatedProducts(allProducts.filter(p => p.id !== id).slice(0, 4));
-      })
-      .catch(err => console.error("Error fetching related products:", err));
+    // Find product by id from static data
+    const p = staticProducts.find(p => p.id === id);
+    if (p) {
+      setProduct(p);
+      setSelectedVariant(p.variants[0]);
+      setMainImage(p.variants[0]?.image || p.images[0]);
+    } else {
+      toast.error("Product not found");
+      navigate('/');
+    }
+    // Related products from static data
+    setRelatedProducts(staticProducts.filter(p => p.id !== id).slice(0, 4));
+    setLoading(false);
   }, [id, navigate]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
